@@ -1,0 +1,68 @@
+{
+        final JFrame saveLoadBox = new JFrame();
+        saveLoadBox.setLayout(null);
+        final JFileChooser filechooser = new JFileChooser();
+        final JLabel saveDescribtion = new JLabel();
+        saveDescribtion.setSize(200, 20);
+        saveDescribtion.setLocation(100, 12);
+        final JLabel loadDescribtion = new JLabel();
+        loadDescribtion.setSize(300, 20);
+        loadDescribtion.setLocation(100, 40);
+        saveLoadBox.setSize(375, 100);
+        saveLoadBox.setLocation(100, 100);
+        JButton saveButton = new JButton("Save");
+        JButton loadButton = new JButton("Load");
+        saveButton.setSize(70, 20);
+        loadButton.setSize(70, 20);
+        saveButton.setLocation(25, 12);
+        loadButton.setLocation(25, 40);
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filechooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                filechooser.showDialog(saveLoadBox, "Save");
+                saveDescribtion.setText(isCorrectFilePath(filechooser.getSelectedFile(), 1));
+            }
+        });
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filechooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                filechooser.showDialog(saveLoadBox, "Load");
+                loadDescribtion.setText(isCorrectFilePath(filechooser.getSelectedFile(), 2));
+            }
+        });
+        saveLoadBox.add(saveDescribtion);
+        saveLoadBox.add(loadDescribtion);
+        saveLoadBox.add(saveButton);
+        saveLoadBox.add(loadButton);
+        saveLoadBox.setVisible(true);
+    }
+
+    private String isCorrectFilePath(File file, int type) {
+        if (file == null)
+            return "No File Selected";
+        switch (type) {
+            case 1: {
+                if (!(file.isDirectory())) {
+                    return "Save Directory Not Found";
+                } else {
+                    return "Save Directory Founded";
+                }
+            }
+            case 2: {
+                String extension = new String();
+
+                int i = file.getAbsolutePath().lastIndexOf('.');
+                if (i > 0) {
+                    extension = file.getAbsolutePath().substring(i + 1);
+                    if (!(extension.equalsIgnoreCase("txt"))) {
+                        return "Load File Extension Not Supported";
+                    } else {
+                        return "Load File Founded";
+                    }
+                }
+            }
+        }
+            return " ";
+    }

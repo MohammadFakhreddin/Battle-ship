@@ -1,0 +1,7 @@
+make human
+make human
+make fisher_ship
+make fisher_ship
+work
+make war_ship
+move
